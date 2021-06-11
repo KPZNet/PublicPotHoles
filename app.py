@@ -171,6 +171,15 @@ def AllPotHoles():
 
 # A decorator used to tell the application
 # which URL is associated function
+@app.route('/AllPotHolesReport')
+def AllPotHolesReport():
+    potholeReport = ds.GetAllPotHolesReport()
+    for f in potholeReport:
+        print( str(f) )
+    return render_template('AllPotHolesReport.html', phReport = potholeReport)
+
+# A decorator used to tell the application
+# which URL is associated function
 @app.route('/AllWorkOrders')
 def AllWorkOrders():
     return ds.GetAllWorkOrders()

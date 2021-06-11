@@ -1,0 +1,20 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<h3>{{ "Active Pot Holes" }}</h3>
+
+    {% for ID in phReport -%}
+
+        <p>StreetAddress: {{ phReport[ID].streetAddress}}</p>
+        <p>District: {{ phReport[ID].district}}</p>
+        <p>Severity:  {{ phReport[ID].severity}}</p>
+        <p>Size:  {{ phReport[ID].size}}</p>
+        <p> </p>
+
+    {% endfor %}
+
+
+{% endblock %}

@@ -65,6 +65,9 @@ class DataStore():
             s = s + (phData + "\r\n")
         return s
 
+    def GetAllPotHolesReport(self):
+        return self.potHoles
+
     def GetAllWorkOrders(self):
         s = ""
         for woID in self.workOrders:
