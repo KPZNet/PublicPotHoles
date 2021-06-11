@@ -24,3 +24,13 @@ class AEPotHoleForm ( FlaskForm ) :
     size = StringField ( "Size:", validators=[DataRequired ()] )
     submit = SubmitField ( "Submit" )
 
+class AEWorkOrderForm ( FlaskForm ) :
+    potHoleID = StringField ( "Pothole ID:", validators=[DataRequired ()] )
+    repairCrewID = StringField ( "Repair Crew ID:", validators=[DataRequired ()] )
+    numberOfWorkers = StringField ( "Number of Workers:", validators=[DataRequired ()] )
+    equipmentAssigned = TextAreaField ( "Equipment Assigned:", validators=[DataRequired ()] )
+    hoursApplied = StringField ( "Hours Applied:", validators=[DataRequired ()] )
+    holeStatus = StringField ( "Hole Status:", validators=[DataRequired ()] )
+    fillerMaterial = StringField ( "Filler Material:", validators=[DataRequired ()] )
+
+    submit = SubmitField ( "Submit" )

@@ -1,8 +1,8 @@
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
-from forms import ContactForm, ContactFormXY, AEPotHoleForm
-from PotHoleModels import DataStore, PotHole
+from forms import ContactForm, ContactFormXY, AEPotHoleForm, AEWorkOrderForm
+from PotHoleModels import DataStore, PotHole, WorkOrder
 
 app = Flask ( __name__ )
 app.debug = True
@@ -143,11 +143,37 @@ def AEPotHole():
 
     return render_template('AEPotHole.html', form=form)
 
+@app.route('/AEWorkOrder/', methods=['get', 'post'])
+def AEWorkOrder():
+    form = AEWorkOrderForm()
+    if form.validate_on_submit():
+        f = form
+        wo = WorkOrder()
+        wo.potHoleID = f.potHoleID.data
+        wo.hoursApplied = f.hoursApplied.data
+        wo.repairCrewID = f.repairCrewID.data
+        wo.equipmentAssigned = f.equipmentAssigned.data
+        wo.fillerMaterial = f.fillerMaterial.data
+        wo.holeStatus = f.holeStatus.data
+        wo.numberOfWorkers = f.numberOfWorkers.data
+
+        ds.AddWorkOrder(wo)
+        # db logic goes here
+        return redirect(url_for('AEWorkOrder'))
+
+    return render_template('AEWorkOrder.html', form=form)
+
 # A decorator used to tell the application
 # which URL is associated function
 @app.route('/AllPotHoles')
 def AllPotHoles():
     return ds.GetAllPotHoles()
+
+# A decorator used to tell the application
+# which URL is associated function
+@app.route('/AllWorkOrders')
+def AllWorkOrders():
+    return ds.GetAllWorkOrders()
 
 if __name__ == '__main__' :
     app.run ()
