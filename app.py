@@ -2,11 +2,13 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
 from forms import ContactForm, ContactFormXY, AEPotHoleForm
-import PotHoleModels
+from PotHoleModels import DataStore, PotHole
 
 app = Flask ( __name__ )
 app.debug = True
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
+
+ds = DataStore()
 
 @app.route('/')
 @app.route('/home')
@@ -127,13 +129,25 @@ def AEPotHole():
     form = AEPotHoleForm()
     if form.validate_on_submit():
         f = form
+        ph = PotHole()
+        ph.district = f.district.data
+        ph.streetAddress = f.streetAddress.data
+        ph.size = f.size.data
+        ph.location = f.location.data
+        ph.priority = 5
 
+        ds.AddPotHole(ph)
         # db logic goes here
         print("\nData received. Now redirecting ...")
         return redirect(url_for('AEPotHole'))
 
-
     return render_template('AEPotHole.html', form=form)
+
+# A decorator used to tell the application
+# which URL is associated function
+@app.route('/AllPotHoles')
+def AllPotHoles():
+    return ds.GetAllPotHoles()
 
 if __name__ == '__main__' :
     app.run ()
