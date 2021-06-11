@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
-from forms import ContactForm
+from forms import ContactForm, ContactFormXY
 
 app = Flask ( __name__ )
 app.debug = True
@@ -89,8 +89,8 @@ def LogPotHole():
 
     return render_template("LogPotHole.html")
 
-@app.route('/contractX/', methods=['get', 'post'])
-def contractX():
+@app.route('/contactX/', methods=['get', 'post'])
+def contactX():
     form = ContactForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -101,9 +101,25 @@ def contractX():
         print(message)
         # db logic goes here
         print("\nData received. Now redirecting ...")
-        return redirect(url_for('contractX'))
+        return redirect(url_for('contactX'))
 
     return render_template('contactX.html', form=form)
+
+@app.route('/contactXY/', methods=['get', 'post'])
+def contactXY():
+    form = ContactFormXY()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        message = form.message.data
+        print(name)
+        print(email)
+        print(message)
+        # db logic goes here
+        print("\nData received. Now redirecting ...")
+        return redirect(url_for('contactXY'))
+
+    return render_template('contactXY.html', form=form)
 
 if __name__ == '__main__' :
     app.run ()
