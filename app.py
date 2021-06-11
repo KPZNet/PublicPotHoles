@@ -1,9 +1,11 @@
-from flask import Flask
 from datetime import datetime
-from flask import render_template, request
+from flask import Flask, render_template, request, redirect, url_for
+
+from forms import ContactForm
 
 app = Flask ( __name__ )
-
+app.debug = True
+app.config['SECRET_KEY'] = 'a really really really really long secret key'
 
 @app.route('/')
 @app.route('/home')
@@ -47,12 +49,7 @@ def KFormOneJ():
        return "Your name is "+first_name + last_name
     return render_template("KFormOneJ.html")
 
-@app.route('/KFormOneX')
-def KFormOneX():
-    """Renders the contact page."""
-    return render_template(
-        'KFormOne.html'
-    )
+
 
 @app.route ( '/data/', methods=['POST', 'GET'] )
 def data() :
@@ -73,6 +70,40 @@ def about():
         message='Your application description page.'
     )
 
+@app.route("/LogPotHole", methods=["GET", "POST"])
+def LogPotHole():
+
+    if request.method == "POST":
+
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        # Alternatively
+
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        return redirect(request.url)
+
+    return render_template("LogPotHole.html")
+
+@app.route('/contractX/', methods=['get', 'post'])
+def contractX():
+    form = ContactForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        message = form.message.data
+        print(name)
+        print(email)
+        print(message)
+        # db logic goes here
+        print("\nData received. Now redirecting ...")
+        return redirect(url_for('contractX'))
+
+    return render_template('contactX.html', form=form)
 
 if __name__ == '__main__' :
     app.run ()
