@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
-from forms import ContactForm, ContactFormXY
+from forms import ContactForm, ContactFormXY, AEPotHoleForm
+import PotHoleModels
 
 app = Flask ( __name__ )
 app.debug = True
@@ -13,7 +14,7 @@ def home():
     """Renders the home page."""
     return render_template(
         'index.html',
-        title='Home Page',
+        title='PHTRS Home',
         year=datetime.now().year,
     )
 
@@ -65,9 +66,9 @@ def about():
     """Renders the about page."""
     return render_template(
         'about.html',
-        title='About',
+        title='CSU Global 505',
         year=datetime.now().year,
-        message='Your application description page.'
+        message='Kenneth Ceglia'
     )
 
 @app.route("/LogPotHole", methods=["GET", "POST"])
@@ -120,6 +121,19 @@ def contactXY():
         return redirect(url_for('contactXY'))
 
     return render_template('contactXY.html', form=form)
+
+@app.route('/AEPotHole/', methods=['get', 'post'])
+def AEPotHole():
+    form = AEPotHoleForm()
+    if form.validate_on_submit():
+        f = form
+
+        # db logic goes here
+        print("\nData received. Now redirecting ...")
+        return redirect(url_for('AEPotHole'))
+
+
+    return render_template('AEPotHole.html', form=form)
 
 if __name__ == '__main__' :
     app.run ()

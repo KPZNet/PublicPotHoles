@@ -15,3 +15,12 @@ class ContactFormXY ( FlaskForm ) :
     email = StringField ( "Email: ", validators=[Email ()] )
     message = TextAreaField ( "Message", validators=[DataRequired ()] )
     submit = SubmitField ( "Submit" )
+
+class AEPotHoleForm ( FlaskForm ) :
+    streetAddress = StringField ( "Street:", validators=[DataRequired ()] )
+    district = StringField ( "District:", validators=[DataRequired ()] )
+    location = StringField ( "Location:", validators=[DataRequired ()] )
+    severity = StringField ( "Severity:", validators=[DataRequired ()] )
+    size = StringField ( "Size:", validators=[DataRequired ()] )
+    submit = SubmitField ( "Submit" )
+
