@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Email
 class AEPotHoleForm ( FlaskForm ) :
     streetAddress = StringField ( "Street:", validators=[DataRequired ()] )
     location = StringField ( "Location:", validators=[DataRequired ()] )
-    size = IntegerField ( "Size:", validators=[DataRequired ()] )
+    size = IntegerField ( "Size in inches:", validators=[DataRequired ()] )
     severity = StringField ( "Severity:", validators=[DataRequired ()] )
     submit = SubmitField ( "Submit" )
 
@@ -18,7 +18,6 @@ class AEWorkOrderForm ( FlaskForm ) :
     hoursApplied = IntegerField ( "Hours Applied:", validators=[DataRequired ()] )
     holeStatus = StringField ( "Hole Status:", validators=[DataRequired ()] )
     fillerMaterial = IntegerField ( "Filler Material Used:", validators=[DataRequired ()] )
-
     submit = SubmitField ( "Submit" )
 
 class AEDamageClaimForm ( FlaskForm ) :
@@ -26,8 +25,7 @@ class AEDamageClaimForm ( FlaskForm ) :
     name = StringField ( "Name:", validators=[DataRequired ()] )
     address = StringField ( "Address:", validators=[DataRequired ()] )
     phone = StringField ( "Phone:", validators=[DataRequired ()] )
-    damageType = StringField ( "Damage Type:", validators=[DataRequired ()] )
-    dollarAmount = StringField ( "Dollar Amount:", validators=[DataRequired ()] )
+    damageType = StringField ( "Damage Description:", validators=[DataRequired ()] )
+    dollarAmount = StringField ( "Claim Amount:", validators=[DataRequired ()] )
     approved = BooleanField ( "Approval Status:", validators=[DataRequired ()] )
-
     submit = SubmitField ( "Submit" )
