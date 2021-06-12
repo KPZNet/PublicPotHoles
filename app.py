@@ -43,12 +43,13 @@ def AEPotHole():
     if form.validate_on_submit():
         f = form
         ph = PotHole()
-        ph.district = f.district.data
         ph.streetAddress = f.streetAddress.data
         ph.size = f.size.data
         ph.location = f.location.data
-        ph.priority = 5
+        ph.severity = f.severity.data
 
+        ph.CalculatePriority()
+        ph.CaculateDistrict()
         ds.AddPotHole(ph)
         DataStore.FactoryDataSave(ds)
 
@@ -70,6 +71,7 @@ def AEWorkOrder():
         wo.holeStatus = f.holeStatus.data
         wo.numberOfWorkers = f.numberOfWorkers.data
 
+        wo.CalculateCostEsimate()
         ds.AddWorkOrder(wo)
         DataStore.FactoryDataSave ( ds )
 

@@ -4,43 +4,83 @@ import os.path
 import jsonpickle
 
 class PotHole (  ) :
-    ID = 1
-    streetAddress = "street"
-    district = "district 13"
-    location = "not set"
-    severity = 1
-    size = 1
-    priority = 0
-    costEstimate = 0.0
 
     def __init__(self):
-        ID = 0
+        self.ID = 0
+        self.streetAddress = "NONE"
+        self.district = "NONE"
+        self.location = "NONE"
+        self.severity = "NONE"
+        self.size = 0
+        self.priority = "NONE"
+
+    def CalculatePriority(self):
+        self.priority = "LOW"
+        if self.size > 3:
+            self.priority = "MEDIUM"
+        if self.size > 8:
+            self.priority = "HIGH"
+
+    def CaculateDistrict(self):
+        self.district = "District-13"
+        if "East" in self.streetAddress:
+            self.district = "East District"
+        if "West" in self.streetAddress:
+            self.district = "West District"
+        if "South" in self.streetAddress:
+            self.district = "South District"
+        if "North" in self.streetAddress:
+            self.district = "North District"
 
 class WorkOrder (  ) :
-    ID = 0
-    potHoleID = 0
-    repairCrewID = 0
-    numberOfWorkers = 0
-    equipmentAssigned = ""
-    hoursApplied = ""
-    holeStatus = ""
-    fillerMaterial = ""
+    hourRate = 20.00
+    fillerMaterialCost = 56.75
+    backHoeCost = 450.00
+    shovelCost = 20.00
+    pickCost = 15.00
+    mixerCost = 150.00
+    standardEquipCost = 100.00
 
     def __init__(self):
-        ID = 0
+        self.ID = 0
+        self.potHoleID = 0
+        self.repairCrewID = 0
+        self.numberOfWorkers = 0
+        self.equipmentAssigned = ""
+        self.hoursApplied = 0
+        self.holeStatus = ""
+        self.fillerMaterial = 0
+        self.location = ""
+        self.size = 0
+        self.costEstimate = 0.0
+
+    def CalculateCostEsimate(self):
+        ceh = (self.hourRate * self.hoursApplied * self.numberOfWorkers)
+        cem = (self.fillerMaterialCost*self.fillerMaterial)
+
+        equipCost = self.standardEquipCost
+        if "backhoe" in self.equipmentAssigned:
+            equipCost = equipCost + self.backHoeCost
+        if "mixer" in self.equipmentAssigned:
+            equipCost = equipCost + self.mixerCost
+        if "shovel" in self.equipmentAssigned:
+            equipCost = equipCost + self.shovelCost
+        if "pick" in self.equipmentAssigned:
+            equipCost = equipCost + self.pickCost
+
+        self.costEstimate = equipCost + cem + ceh
 
 class DamageClaim (  ) :
-    ID = 0
-    potHoleID = 0
-    name = ""
-    address = ""
-    phone = ""
-    damageType = ""
-    dollarAmount = 0.0
-    approved = False
 
     def __init__(self):
-        ID = 0
+        self.ID = 0
+        self.potHoleID = 0
+        self.name = ""
+        self.address = ""
+        self.phone = ""
+        self.damageType = ""
+        self.dollarAmount = 0.0
+        self.approved = False
 
 class DataStore():
 
@@ -51,8 +91,6 @@ class DataStore():
         self.nextPotHoleID = 0
         self.nextWorkOrderID = 0
         self.nextdamageClaimID = 0
-
-        self.ReadDataStore ()
 
     def __del__(self) :
         pass
@@ -78,9 +116,14 @@ class DataStore():
        return pothole
 
     def AddWorkOrder(self, workOrder):
-       self.nextWorkOrderID = self.nextWorkOrderID + 1
-       workOrder.ID = self.nextWorkOrderID
-       self.workOrders[str(self.nextWorkOrderID)] = workOrder
+
+       if str(workOrder.potHoleID) in self.potHoles:
+           ph = self.potHoles[str(workOrder.potHoleID)]
+           workOrder.location = ph.streetAddress
+           workOrder.size  = ph.size
+           self.nextWorkOrderID = self.nextWorkOrderID + 1
+           workOrder.ID = self.nextWorkOrderID
+           self.workOrders[str(self.nextWorkOrderID)] = workOrder
        return workOrder
 
     def AddDamageClaim(self, damageClaim):
@@ -97,8 +140,10 @@ class DataStore():
                     json_object = openfile.read()
                     pt = jsonpickle.decode ( json_object )
                     return pt
+            else:
+                return DataStore()
         except(Exception) as e:
-            pass
+            return DataStore()
         finally :
             pass
 
