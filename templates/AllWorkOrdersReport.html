@@ -1,0 +1,25 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<h2>Work Orders</h2>
+
+    {% for ID in woReport -%}
+
+        <p>ID: {{ woReport[ID].ID}}</p>
+        <p>Pothole ID: {{ woReport[ID].potHoleID}}</p>
+        <p>Repair Crew ID:  {{ woReport[ID].repairCrewID}}</p>
+        <p>Number of Workers:  {{ woReport[ID].numberOfWorkers}}</p>
+        <p>Equipment Assigned:  {{ woReport[ID].equipmentAssigned}}</p>
+        <p>Hours Applied:  {{ woReport[ID].hoursApplied}}</p>
+        <p>Hole Status:  {{ woReport[ID].holeStatus}}</p>
+        <p>Number of Workers:  {{ woReport[ID].fillerMaterial}}</p>
+        <p> </p>
+
+
+    {% endfor %}
+
+
+{% endblock %}

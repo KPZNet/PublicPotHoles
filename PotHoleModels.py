@@ -1,5 +1,6 @@
 
-
+import json
+import os.path
 
 class PotHole (  ) :
     ID = 1
@@ -13,15 +14,9 @@ class PotHole (  ) :
     def __init__(self):
         ID = 0
 
-    def GetPotHoleData(self):
-        s = ""
-        s = s + "ID: " + (str ( self.ID ) + "\n")
-        s = s + "Street: " + (str(self.streetAddress) + "\n")
-        s = s + "District: " + (str(self.district) + "\n")
-        s = s + "Severity: " + (str(self.severity) + "\n")
-        s = s + "Size: " + (str(self.size) + "\n")
-        s = s + "Priority: " + (str(self.priority) + "\n")
-        return s
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
+
 
 class WorkOrder (  ) :
     ID = 0
@@ -36,17 +31,8 @@ class WorkOrder (  ) :
     def __init__(self):
         ID = 0
 
-    def GetWorkOrderData(self):
-        s = ""
-        s = s + "ID: " + (str ( self.ID ) + "\n")
-        s = s + "potHoleID: " + (str(self.potHoleID) + "\n")
-        s = s + "repairCrewID: " + (str(self.repairCrewID) + "\n")
-        s = s + "numberOfWorkers: " + (str(self.numberOfWorkers) + "\n")
-        s = s + "equipmentAssigned: " + (str(self.equipmentAssigned) + "\n")
-        s = s + "hoursApplied: " + (str(self.hoursApplied) + "\n")
-        s = s + "holeStatus: " + (str ( self.holeStatus ) + "\n")
-        s = s + "fillerMaterial: " + (str ( self.fillerMaterial ) + "\n")
-        return s
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
 
 
 class DataStore():
@@ -57,33 +43,46 @@ class DataStore():
     nextWorkOrderID = 0
     nextdamageClaimID = 0
 
-    def GetAllPotHoles(self):
-        s = ""
-        for phID in self.potHoles:
-            ph = self.potHoles[phID]
-            phData = ph.GetPotHoleData()
-            s = s + (phData + "\r\n")
-        return s
+    def __init__(self) :
+        self.ReadDataStore ()
+
+    def ReadDataStore(self) :
+        return
+        if os.path.isfile ( 'PotHoles.json' ) :
+            with open ( 'PotHoles.json', 'r' ) as openfile :
+                self.potHoles = json.load ( openfile )
+        if os.path.isfile ( 'WorkOrders.json' ) :
+            with open ( 'WorkOrders.json', 'r' ) as openfile :
+                self.workOrders = json.load ( openfile )
+
+
+    def __del__(self) :
+        self.WriteDataStore ()
+
+    def WriteDataStore(self) :
+        return
+        with open ( "PotHoles.json", "w" ) as outfile :
+            json.dump ( self.potHoles, outfile )
+        with open ( "WorkOrders.json", "w" ) as outfile :
+            json.dump ( self.workOrders, outfile )
+
 
     def GetAllPotHolesReport(self):
         return self.potHoles
 
-    def GetAllWorkOrders(self):
-        s = ""
-        for woID in self.workOrders:
-            wo = self.workOrders[woID]
-            woData = wo.GetWorkOrderData()
-            s = s + (woData + "\r\n")
-        return s
+    def GetAllWorkOrdersReport(self):
+        return self.workOrders
 
     def AddPotHole(self, pothole):
        self.nextPotHoleID = self.nextPotHoleID + 1
        pothole.ID = self.nextPotHoleID
        self.potHoles[self.nextPotHoleID] = pothole
+       self.WriteDataStore()
        return pothole
 
     def AddWorkOrder(self, workOrder):
        self.nextWorkOrderID = self.nextWorkOrderID + 1
        workOrder.ID = self.nextWorkOrderID
        self.workOrders[self.nextWorkOrderID] = workOrder
+       self.WriteDataStore()
        return workOrder
