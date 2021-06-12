@@ -1,0 +1,24 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+      <h4 class="title">Damage Claim Reports</h4>
+          <h3> All Damage Claims </h3>
+
+    {% for ID in dcReport -%}
+
+        <p>ID: {{ dcReport[ID].ID}}</p>
+        <p>Pothole ID: {{ dcReport[ID].potHoleID}}</p>
+        <p>Name:  {{ dcReport[ID].name}}</p>
+        <p>Address:  {{ dcReport[ID].address}}</p>
+        <p>Phone:  {{ dcReport[ID].phone}}</p>
+        <p>Damage Type:  {{ dcReport[ID].damageType}}</p>
+        <p>Dollar Amount:  {{ dcReport[ID].dollarAmount}}</p>
+        <p>Approved:  {{ dcReport[ID].approved}}</p>
+        <p> </p>
+
+    {% endfor %}
+
+
+{% endblock %}

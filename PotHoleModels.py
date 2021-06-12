@@ -11,13 +11,10 @@ class PotHole (  ) :
     severity = 1
     size = 1
     priority = 0
+    costEstimate = 0.0
 
     def __init__(self):
         ID = 0
-
-    def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
-
 
 class WorkOrder (  ) :
     ID = 0
@@ -32,9 +29,18 @@ class WorkOrder (  ) :
     def __init__(self):
         ID = 0
 
-    def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
+class DamageClaim (  ) :
+    ID = 0
+    potHoleID = 0
+    name = ""
+    address = ""
+    phone = ""
+    damageType = ""
+    dollarAmount = 0.0
+    approved = False
 
+    def __init__(self):
+        ID = 0
 
 class DataStore():
 
@@ -49,24 +55,7 @@ class DataStore():
         self.ReadDataStore ()
 
     def __del__(self) :
-        self.WriteDataStore ()
-
-    def ReadDataStore(self) :
-        try :
-            if os.path.isfile ( 'PotHoles.json' ) :
-                with open ( 'PotHoles.json', 'r' ) as openfile :
-                    json_object = openfile.read()
-                    pt = jsonpickle.decode ( json_object )
-                    self.potHoles = pt.potHoles
-                    self.workOrders = pt.workOrders
-                    self.damageClaims = pt.damageClaims
-                    self.nextPotHoleID = pt.nextPotHoleID
-                    self.nextWorkOrderID = pt.nextWorkOrderID
-                    self.nextdamageClaimID = pt.nextdamageClaimID
-        except(Exception) as e:
-            pass
-        finally :
-            pass
+        pass
 
     def WriteDataStore(self) :
         jp = jsonpickle.encode(self)
@@ -79,6 +68,9 @@ class DataStore():
     def GetAllWorkOrdersReport(self):
         return self.workOrders
 
+    def GetAllDamageClaimReport(self):
+        return self.damageClaims
+
     def AddPotHole(self, pothole):
        self.nextPotHoleID = self.nextPotHoleID + 1
        pothole.ID = self.nextPotHoleID
@@ -90,3 +82,33 @@ class DataStore():
        workOrder.ID = self.nextWorkOrderID
        self.workOrders[str(self.nextWorkOrderID)] = workOrder
        return workOrder
+
+    def AddDamageClaim(self, damageClaim):
+       self.nextdamageClaimID = self.nextdamageClaimID + 1
+       damageClaim.ID = self.nextdamageClaimID
+       self.damageClaims[str(self.nextdamageClaimID)] = damageClaim
+       return damageClaim
+
+    @staticmethod
+    def FactoryDataRestore():
+        try :
+            if os.path.isfile ( 'PotHoles.json' ) :
+                with open ( 'PotHoles.json', 'r' ) as openfile :
+                    json_object = openfile.read()
+                    pt = jsonpickle.decode ( json_object )
+                    return pt
+        except(Exception) as e:
+            pass
+        finally :
+            pass
+
+    @staticmethod
+    def FactoryDataSave(ds):
+        try :
+            jp = jsonpickle.encode ( ds )
+            with open ( "PotHoles.json", "w" ) as outfile :
+                outfile.write ( jp )
+        except(Exception) as e:
+            pass
+        finally :
+            pass

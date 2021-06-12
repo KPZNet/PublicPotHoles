@@ -3,11 +3,12 @@
 
 {% block content %}
 
+      <h4 class="title">Pot Holes Report</h4>
+          <h3> All Potholes </h3>
 
-<h2>Active Pot Holes</h2>
 
     {% for ID in phReport -%}
-
+        <p>ID: {{ phReport[ID].ID}}</p>
         <p>StreetAddress: {{ phReport[ID].streetAddress}}</p>
         <p>District: {{ phReport[ID].district}}</p>
         <p>Severity:  {{ phReport[ID].severity}}</p>

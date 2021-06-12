@@ -3,19 +3,6 @@ from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email
 
 
-class ContactForm ( FlaskForm ) :
-    name = StringField ( "Name: ", validators=[DataRequired ()] )
-    email = StringField ( "Email: ", validators=[Email ()] )
-    message = TextAreaField ( "Message", validators=[DataRequired ()] )
-    submit = SubmitField ( "Submit" )
-
-
-class ContactFormXY ( FlaskForm ) :
-    name = StringField ( "Name: ", validators=[DataRequired ()] )
-    email = StringField ( "Email: ", validators=[Email ()] )
-    message = TextAreaField ( "Message", validators=[DataRequired ()] )
-    submit = SubmitField ( "Submit" )
-
 class AEPotHoleForm ( FlaskForm ) :
     streetAddress = StringField ( "Street:", validators=[DataRequired ()] )
     district = StringField ( "District:", validators=[DataRequired ()] )
@@ -32,5 +19,16 @@ class AEWorkOrderForm ( FlaskForm ) :
     hoursApplied = StringField ( "Hours Applied:", validators=[DataRequired ()] )
     holeStatus = StringField ( "Hole Status:", validators=[DataRequired ()] )
     fillerMaterial = StringField ( "Filler Material:", validators=[DataRequired ()] )
+
+    submit = SubmitField ( "Submit" )
+
+class AEDamageClaimForm ( FlaskForm ) :
+    potHoleID = StringField ( "Pothole ID:", validators=[DataRequired ()] )
+    name = StringField ( "Name:", validators=[DataRequired ()] )
+    address = StringField ( "Address:", validators=[DataRequired ()] )
+    phone = TextAreaField ( "Phone:", validators=[DataRequired ()] )
+    damageType = StringField ( "Damage Type:", validators=[DataRequired ()] )
+    dollarAmount = StringField ( "Dollar Amount:", validators=[DataRequired ()] )
+    approved = StringField ( "Approval Status:", validators=[DataRequired ()] )
 
     submit = SubmitField ( "Submit" )
