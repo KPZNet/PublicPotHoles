@@ -4,6 +4,10 @@ from flask import Flask, render_template, request, redirect, url_for
 from forms import ContactForm, ContactFormXY, AEPotHoleForm, AEWorkOrderForm
 from PotHoleModels import DataStore, PotHole, WorkOrder
 
+import jsonpickle
+import os.path
+import json
+
 app = Flask ( __name__ )
 app.debug = True
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
@@ -44,7 +48,8 @@ def AEPotHole():
         ph.priority = 5
 
         ds.AddPotHole(ph)
-        # db logic goes here
+        ds.WriteDataStore()
+
         return redirect(url_for('AEPotHole'))
 
     return render_template('AEPotHole.html', form=form)

@@ -1,6 +1,7 @@
 
 import json
 import os.path
+import jsonpickle
 
 class PotHole (  ) :
     ID = 1
@@ -46,26 +47,27 @@ class DataStore():
     def __init__(self) :
         self.ReadDataStore ()
 
-    def ReadDataStore(self) :
-        return
-        if os.path.isfile ( 'PotHoles.json' ) :
-            with open ( 'PotHoles.json', 'r' ) as openfile :
-                self.potHoles = json.load ( openfile )
-        if os.path.isfile ( 'WorkOrders.json' ) :
-            with open ( 'WorkOrders.json', 'r' ) as openfile :
-                self.workOrders = json.load ( openfile )
-
-
     def __del__(self) :
         self.WriteDataStore ()
 
-    def WriteDataStore(self) :
-        return
-        with open ( "PotHoles.json", "w" ) as outfile :
-            json.dump ( self.potHoles, outfile )
-        with open ( "WorkOrders.json", "w" ) as outfile :
-            json.dump ( self.workOrders, outfile )
+    def ReadDataStore(self) :
 
+        try :
+            if os.path.isfile ( 'PotHoles.json' ) :
+                with open ( 'PotHoles.json', 'r' ) as openfile :
+                    json_object = openfile.read()
+                    ptHoles = jsonpickle.decode ( json_object )
+                    self.potHoles = ptHoles
+        except(Exception) as e:
+            print ( "<<< EXCEPTION >>>" )
+            print ( e )
+        finally :
+            print ( "Completed" )
+
+    def WriteDataStore(self) :
+        jpPotHoles = jsonpickle.encode ( self.potHoles )
+        with open ( "PotHoles.json", "w" ) as outfile :
+            outfile.write ( jpPotHoles )
 
     def GetAllPotHolesReport(self):
         return self.potHoles
@@ -77,12 +79,10 @@ class DataStore():
        self.nextPotHoleID = self.nextPotHoleID + 1
        pothole.ID = self.nextPotHoleID
        self.potHoles[self.nextPotHoleID] = pothole
-       self.WriteDataStore()
        return pothole
 
     def AddWorkOrder(self, workOrder):
        self.nextWorkOrderID = self.nextWorkOrderID + 1
        workOrder.ID = self.nextWorkOrderID
        self.workOrders[self.nextWorkOrderID] = workOrder
-       self.WriteDataStore()
        return workOrder
