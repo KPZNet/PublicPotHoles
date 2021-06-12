@@ -37,37 +37,41 @@ class WorkOrder (  ) :
 
 
 class DataStore():
-    potHoles = {}
-    workOrders = {}
-    damageClaims = {}
-    nextPotHoleID = 0
-    nextWorkOrderID = 0
-    nextdamageClaimID = 0
 
     def __init__(self) :
+        self.potHoles = {}
+        self.workOrders = {}
+        self.damageClaims = {}
+        self.nextPotHoleID = 0
+        self.nextWorkOrderID = 0
+        self.nextdamageClaimID = 0
+
         self.ReadDataStore ()
 
     def __del__(self) :
         self.WriteDataStore ()
 
     def ReadDataStore(self) :
-
         try :
             if os.path.isfile ( 'PotHoles.json' ) :
                 with open ( 'PotHoles.json', 'r' ) as openfile :
                     json_object = openfile.read()
-                    ptHoles = jsonpickle.decode ( json_object )
-                    self.potHoles = ptHoles
+                    pt = jsonpickle.decode ( json_object )
+                    self.potHoles = pt.potHoles
+                    self.workOrders = pt.workOrders
+                    self.damageClaims = pt.damageClaims
+                    self.nextPotHoleID = pt.nextPotHoleID
+                    self.nextWorkOrderID = pt.nextWorkOrderID
+                    self.nextdamageClaimID = pt.nextdamageClaimID
         except(Exception) as e:
-            print ( "<<< EXCEPTION >>>" )
-            print ( e )
+            pass
         finally :
-            print ( "Completed" )
+            pass
 
     def WriteDataStore(self) :
-        jpPotHoles = jsonpickle.encode ( self.potHoles )
+        jp = jsonpickle.encode(self)
         with open ( "PotHoles.json", "w" ) as outfile :
-            outfile.write ( jpPotHoles )
+            outfile.write ( jp )
 
     def GetAllPotHolesReport(self):
         return self.potHoles
@@ -78,11 +82,11 @@ class DataStore():
     def AddPotHole(self, pothole):
        self.nextPotHoleID = self.nextPotHoleID + 1
        pothole.ID = self.nextPotHoleID
-       self.potHoles[self.nextPotHoleID] = pothole
+       self.potHoles[str(self.nextPotHoleID)] = pothole
        return pothole
 
     def AddWorkOrder(self, workOrder):
        self.nextWorkOrderID = self.nextWorkOrderID + 1
        workOrder.ID = self.nextWorkOrderID
-       self.workOrders[self.nextWorkOrderID] = workOrder
+       self.workOrders[str(self.nextWorkOrderID)] = workOrder
        return workOrder
