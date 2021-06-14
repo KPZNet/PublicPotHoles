@@ -6,19 +6,31 @@
       <h4 class="title">Damage Claim Reports</h4>
           <h3> All Damage Claims </h3>
 
+    <table style="margin: 3px">
+    <tr style="background-color: #7cc3a97d">
+        <th style="color: white;padding: 1rem">ID</th>
+        <th style="color: white;padding: 1rem">Pothole ID</th>
+        <th style="color: white;padding: 1rem">Name</th>
+        <th style="color: white;padding: 1rem">Address</th>
+        <th style="color: white;padding: 1rem">Phone</th>
+        <th style="color: white;padding: 1rem">Damage</th>
+        <th style="color: white;padding: 1rem">Amount</th>
+        <th style="color: white;padding: 1rem">Approved</th>
+    </tr>
     {% for ID in dcReport -%}
-
-        <p>ID: {{ dcReport[ID].ID}}</p>
-        <p>Pothole ID: {{ dcReport[ID].potHoleID}}</p>
-        <p>Name:  {{ dcReport[ID].name}}</p>
-        <p>Address:  {{ dcReport[ID].address}}</p>
-        <p>Phone:  {{ dcReport[ID].phone}}</p>
-        <p>Damage Type:  {{ dcReport[ID].damageType}}</p>
-        <p>Dollar Amount:  {{ dcReport[ID].dollarAmount}}</p>
-        <p>Approved:  {{ dcReport[ID].approved}}</p>
-        <p> </p>
+        <tr style="background-color: aliceblue">
+        <td style="padding: 1rem">{{phReport[ID].ID}}</td>
+        <td style="padding: 1rem">{{phReport[ID].potHoleID}}</td>
+        <td style="padding: 1rem">{{phReport[ID].name}}</td>
+        <td style="padding: 1rem">{{phReport[ID].address}}</td>
+        <td style="padding: 1rem">{{phReport[ID].phone}}</td>
+        <td style="padding: 1rem">{{phReport[ID].damageType}}</td>
+        <td style="padding: 1rem">{{phReport[ID].dollarAmount}}</td>
+        <td style="padding: 1rem">{{phReport[ID].approved}}</td>
+    </tr>
 
     {% endfor %}
+    </table>
 
 
 {% endblock %}

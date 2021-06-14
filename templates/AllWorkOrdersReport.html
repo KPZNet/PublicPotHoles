@@ -7,20 +7,37 @@
       <h4 class="title">Work Order Report</h4>
           <h3> All Work Orders </h3>
 
+    <table style="margin: 3px">
+    <tr style="background-color: #7cc3a97d">
+        <th style="color: white;padding: 1rem">ID</th>
+        <th style="color: white;padding: 1rem">Pothole ID</th>
+        <th style="color: white;padding: 1rem">Location</th>
+        <th style="color: white;padding: 1rem">size</th>
+        <th style="color: white;padding: 1rem">Repair Crew ID</th>
+        <th style="color: white;padding: 1rem">Workers</th>
+        <th style="color: white;padding: 1rem">Equipment</th>
+        <th style="color: white;padding: 1rem">Hours</th>
+        <th style="color: white;padding: 1rem">Status</th>
+        <th style="color: white;padding: 1rem">Material</th>
+        <th style="color: white;padding: 1rem">Cost</th>
+    </tr>
+
     {% for ID in woReport -%}
 
-        <p>ID: {{ woReport[ID].ID}}</p>
-        <p>Pothole ID: {{ woReport[ID].potHoleID}}</p>
-        <p>Location: {{ woReport[ID].location}}  Size: {{ woReport[ID].size}}</p>
-        <p>Repair Crew ID:  {{ woReport[ID].repairCrewID}}  Number of Workers:  {{ woReport[ID].numberOfWorkers}}</p>
-        <p>Equipment Assigned:  {{ woReport[ID].equipmentAssigned}}  Hours Applied:  {{ woReport[ID].hoursApplied}}</p>
-        <p>Hole Status:  {{ woReport[ID].holeStatus}}</p>
-        <p>Number of Workers:  {{ woReport[ID].fillerMaterial}}</p>
-        <p>Cost Esimate: $  {{ woReport[ID].costEstimate}}</p>
-        <p> </p>
-
+        <tr style="background-color: aliceblue">
+        <td style="padding: 1rem">{{ woReport[ID].ID}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].potHoleID}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].location}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].size}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].repairCrewID}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].numberOfWorkers}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].equipmentAssigned}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].hoursApplied}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].holeStatus}}</td>
+        <td style="padding: 1rem">{{ woReport[ID].fillerMaterial}}</td>
+        <td style="padding: 1rem">${{ woReport[ID].costEstimate}}</td>
 
     {% endfor %}
-
+</table>
 
 {% endblock %}
