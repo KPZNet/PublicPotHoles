@@ -8,6 +8,7 @@
 
     <table style="margin: 3px">
     <tr style="background-color: #7cc3a97d">
+        <th style="color: white;padding: 1rem">ID</th>
         <th style="color: white;padding: 1rem">StreetAddress</th>
         <th style="color: white;padding: 1rem">District</th>
         <th style="color: white;padding: 1rem">Severity</th>
@@ -16,6 +17,7 @@
     </tr>
     {% for ID in phReport -%}
         <tr style="background-color: aliceblue">
+        <td style="padding: 1rem">{{phReport[ID].ID}}</td>
         <td style="padding: 1rem">{{phReport[ID].streetAddress}}</td>
         <td style="padding: 1rem">{{phReport[ID].district}}</td>
         <td style="padding: 1rem">{{phReport[ID].severity}}</td>
