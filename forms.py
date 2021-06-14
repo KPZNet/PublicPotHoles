@@ -27,5 +27,5 @@ class AEDamageClaimForm ( FlaskForm ) :
     phone = StringField ( "Phone:", validators=[DataRequired ()] )
     damageType = StringField ( "Damage Description:", validators=[DataRequired ()] )
     dollarAmount = StringField ( "Claim Amount:", validators=[DataRequired ()] )
-    approved = BooleanField ( "Approval Status:", validators=[DataRequired ()] )
+    approved = BooleanField ( "Approval Status:" )
     submit = SubmitField ( "Submit" )

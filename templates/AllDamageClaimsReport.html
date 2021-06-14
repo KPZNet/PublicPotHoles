@@ -19,14 +19,14 @@
     </tr>
     {% for ID in dcReport -%}
         <tr style="background-color: aliceblue">
-        <td style="padding: 1rem">{{phReport[ID].ID}}</td>
-        <td style="padding: 1rem">{{phReport[ID].potHoleID}}</td>
-        <td style="padding: 1rem">{{phReport[ID].name}}</td>
-        <td style="padding: 1rem">{{phReport[ID].address}}</td>
-        <td style="padding: 1rem">{{phReport[ID].phone}}</td>
-        <td style="padding: 1rem">{{phReport[ID].damageType}}</td>
-        <td style="padding: 1rem">{{phReport[ID].dollarAmount}}</td>
-        <td style="padding: 1rem">{{phReport[ID].approved}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].ID}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].potHoleID}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].name}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].address}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].phone}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].damageType}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].dollarAmount}}</td>
+        <td style="padding: 1rem">{{dcReport[ID].approved}}</td>
     </tr>
 
     {% endfor %}
