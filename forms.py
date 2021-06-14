@@ -5,8 +5,8 @@ from wtforms.validators import DataRequired, Email
 
 class AEPotHoleForm ( FlaskForm ) :
     streetAddress = StringField ( "Street:", validators=[DataRequired ()] )
-    location = StringField ( "Location:", validators=[DataRequired ()] )
-    size = IntegerField ( "Size in inches:", validators=[DataRequired ()] )
+    location = StringField ( "Pothole Location:", validators=[DataRequired ()] )
+    size = IntegerField ( "Size 1-10:", validators=[DataRequired ()] )
     severity = StringField ( "Severity:", validators=[DataRequired ()] )
     submit = SubmitField ( "Submit" )
 

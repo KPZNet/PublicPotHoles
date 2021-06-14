@@ -5,18 +5,17 @@
 
       <h4 class="title">Pot Holes Report</h4>
           <h3> All Potholes </h3>
-
-
+    <table>
     {% for ID in phReport -%}
-        <p>ID: {{ phReport[ID].ID}}</p>
-        <p>StreetAddress: {{ phReport[ID].streetAddress}}</p>
-        <p>District: {{ phReport[ID].district}}</p>
-        <p>Severity:  {{ phReport[ID].severity}}</p>
-        <p>Size:  {{ phReport[ID].size}}</p>
-        <p>Priority:  {{ phReport[ID].priority}}</p>
-        <p> </p>
-
+        <tr>
+            <th>ID {{ phReport[ID].ID}} |</th>
+            <td>StreetAddress: {{ phReport[ID].streetAddress}}</td>
+            <td>|   District: {{ phReport[ID].district}}</td>
+            <td>|   Severity: {{ phReport[ID].severity}}</td>
+            <td>|   Size: {{ phReport[ID].size}}</td>
+            <td>|   Priority: {{ phReport[ID].priority}}</td>
+        </tr>
     {% endfor %}
-
+    </table>
 
 {% endblock %}
